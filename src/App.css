@@ -1,0 +1,280 @@
+@import url("https://fonts.googleapis.com/css2?family=Shrikhand&family=Signika:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+
+.background {
+    background-color: #f2c230;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Portrait orientation */
+@media screen and (orientation: portrait) {
+    .background {
+        flex-direction: column;
+    }
+    .home-green-background {
+        background-color: #d3d936;
+        width: calc(100vw - 8vw);
+        height: calc(100vh - 8vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-pink-background {
+        background-color: #f20574;
+        width: calc(100vw - 16vw);
+        height: calc(100vh - 16vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .home-emoji-background {
+        background-image: url("assets/emoji-portrait.png");
+        background-size: cover;
+        width: calc(100vw - 24vw);
+        height: calc(100vh - 24vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .ticmoji-text,
+    .player-text {
+        text-shadow: 0.59vh 0.83vh 0.19vh black, -0.4vh -0.4vh 0 black,
+            0 -0.4vh 0 black, 0.4vh -0.4vh 0 black, 0.4vh 0 0 black,
+            0.4vh 0.4vh 0 black, 0 0.4vh 0 black, -0.4vh 0.4vh 0 black,
+            -0.4vh 0 0 black;
+        -webkit-text-stroke: 0.4vh black;
+        font-size: 8vh;
+    }
+
+    .player-text {
+        display: inline-block;
+        line-height: 8vh;
+    }
+    .learn-more {
+        font-size: 3vw;
+        margin-top: 1vh;
+    }
+    .tic-left,
+    .tic-right {
+        width: 100vw;
+        height: 50vh;
+        border-width: 1px;
+        border-color: black;
+    }
+    .board {
+        width: 30vh;
+        height: 30vh;
+    }
+    .box {
+        font-size: 10vw;
+    }
+    .webcam {
+        width: 50vw;
+        transform: rotateY(180deg);
+        border-radius: 10vw;
+    }
+    .prediction {
+        font-size: 4vw;
+    }
+}
+/* Landscape orientation */
+@media screen and (orientation: landscape) {
+    .home-green-background {
+        background-color: #d3d936;
+        width: calc(100vw - 8vh);
+        height: calc(100vh - 8vh);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-pink-background {
+        background-color: #f20574;
+        width: calc(100vw - 16vh);
+        height: calc(100vh - 16vh);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .home-emoji-background {
+        background-image: url("assets/emoji-landscape.jpg");
+        background-size: cover;
+        width: calc(100vw - 24vh);
+        height: calc(100vh - 24vh);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .ticmoji-text,
+    .player-text {
+        text-shadow: 0.59vw 0.83vw 0.19vw black, -0.4vw -0.4vw 0 black,
+            0 -0.4vw 0 black, 0.4vw -0.4vw 0 black, 0.4vw 0 0 black,
+            0.4vw 0.4vw 0 black, 0 0.4vw 0 black, -0.4vw 0.4vw 0 black,
+            -0.4vw 0 0 black;
+        font-size: 10vw;
+    }
+
+    .player-text {
+        display: inline-block;
+        line-height: 10vw;
+    }
+
+    .learn-more {
+        font-size: 3vh;
+    }
+    .tic-left,
+    .tic-right {
+        width: 50vw;
+        height: 100vh;
+    }
+    .board {
+        width: 60vh;
+        height: 60vh;
+    }
+    .box {
+        font-size: 10vh;
+    }
+    .webcam {
+        width: 25vw;
+        border-radius: 5vw;
+        transform: rotateY(180deg);
+    }
+
+    .prediction {
+        font-size: 4vh;
+    }
+}
+
+.prediction {
+    font-family: "Signika", sans-serif;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.tic-left,
+.tic-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tic-right {
+    flex-direction: column;
+}
+
+button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    font-family: "Signika", "san-serif";
+}
+button.learn-more {
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 1.25em 2em;
+    background: #f32613;
+    border: 2px solid #000000;
+    border-radius: 100vw;
+    transform-style: preserve-3d;
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        background 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+button.learn-more::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px #000000;
+    transform: translate3d(0, 0.75em, -1em);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+button.learn-more:hover {
+    transform: translate(0, 0.25em);
+}
+button.learn-more:hover::before {
+    box-shadow: 0 0 0 2px #000000;
+    transform: translate3d(0, 0.5em, -1em);
+}
+button.learn-more:active {
+    transform: translate(0em, 0.75em);
+}
+button.learn-more:active::before {
+    box-shadow: 0 0 0 2px #000000;
+    transform: translate3d(0, 0, -1em);
+}
+
+.ticmoji-text {
+    font-family: "Shrikhand" !important;
+    color: rgba(255, 255, 255, 1);
+    /* offset-x | offset-y | blur-radius | color */
+    transform: rotate(-8.5deg);
+    font-weight: bold;
+    margin: 0;
+    animation: grow 2s ease-in-out 0s infinite alternate;
+}
+
+@keyframes grow {
+    from {
+        transform: rotate(-8.5deg) scale(1);
+    }
+    to {
+        transform: rotate(-8.5deg) scale(1.1);
+    }
+}
+
+.board {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-image: url("assets/grid.png");
+    background-size: cover;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.box {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: "Comfortaa", sans-serif;
+}
+
+.X {
+    color: #f32613;
+}
+
+.O {
+    color: #3646d9;
+}
+
+.player-text {
+    font-family: "Shrikhand" !important;
+    color: rgba(255, 255, 255, 1);
+    font-weight: bold;
+    margin: 0;
+    transform: scale(0.7);
+}
