@@ -9,6 +9,7 @@ import { AwesomeButton } from "react-awesome-button";
 // import "@mediapipe/face_mesh";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import "react-awesome-button/dist/styles.css";
+import { motion } from "framer-motion";
 
 function detectWinner(board) {
     const winningCombinations = [
@@ -103,6 +104,8 @@ const Tictactoe = () => {
     ];
     const [board, setBoard] = useState(defaultBoard);
     const [player, setPlayer] = useState("1");
+    const [winner, setWinner] = useState(null);
+    const [alert, setAlert] = useState(0);
     const [faceLandmarker, setFaceLandmarker] = useState(undefined);
     const [result, setResult] = useState(undefined);
     const navigate = useNavigate();
@@ -119,9 +122,15 @@ const Tictactoe = () => {
         }
     };
     useEffect(() => {
-        const winner = detectWinner(board);
-        if (winner) {
-            alert(`The winner is player ${winner}`);
+        const currWinner = detectWinner(board);
+        if (currWinner) {
+            setWinner(`Player ${currWinner}`);
+            setAlert(1);
+        } else if (
+            board.every((row) => row.every((square) => isFinite(square)))
+        ) {
+            setWinner("Tie");
+            setAlert(1);
         }
     }, [JSON.stringify(board)]);
     useEffect(() => {
@@ -195,67 +204,97 @@ const Tictactoe = () => {
         runFaceLandmarks();
     }, []);
     return (
-        <div className="background">
-            <div className="tic-left">
-                <div className="board">
-                    {board.map((row, rowIndex) => {
-                        if (!result) {
+        <>
+            <motion.div
+                className="alert-background"
+                animate={{ opacity: alert }}
+                style={{ zIndex: alert ? 9 : -10 }}
+            >
+                <div className="player-text">
+                    {winner === "Tie" ? "It's a tie!" : `${winner} Wins!`}
+                </div>
+                <AwesomeButton
+                    type="danger"
+                    onPress={() => {
+                        window.location.reload();
+                    }}
+                >
+                    Play Again
+                </AwesomeButton>
+            </motion.div>
+            <div className="background">
+                <motion.div
+                    className="tic-left"
+                    initial={{ x: -1000 }}
+                    animate={{ x: 0 }}
+                >
+                    <div className="board">
+                        {board.map((row, rowIndex) => {
+                            if (!result) {
+                                return (
+                                    <div className="row" key={rowIndex}>
+                                        {row.map((square, squareIndex) => (
+                                            <div
+                                                className={`box`}
+                                                key={squareIndex}
+                                            >
+                                                {square}
+                                            </div>
+                                        ))}
+                                    </div>
+                                );
+                            }
                             return (
                                 <div className="row" key={rowIndex}>
                                     {row.map((square, squareIndex) => (
                                         <div
-                                            className={`box`}
+                                            className={`box ${
+                                                square === "1"
+                                                    ? "X"
+                                                    : square === "2"
+                                                    ? "O"
+                                                    : ""
+                                            }`}
                                             key={squareIndex}
                                         >
-                                            {square}
+                                            {square === "1"
+                                                ? "X"
+                                                : square === "2"
+                                                ? "O"
+                                                : square}
                                         </div>
                                     ))}
                                 </div>
                             );
-                        }
-                        return (
-                            <div className="row" key={rowIndex}>
-                                {row.map((square, squareIndex) => (
-                                    <div
-                                        className={`box ${
-                                            square === "1"
-                                                ? "X"
-                                                : square === "2"
-                                                ? "O"
-                                                : ""
-                                        }`}
-                                        key={squareIndex}
-                                    >
-                                        {square === "1"
-                                            ? "X"
-                                            : square === "2"
-                                            ? "O"
-                                            : square}
-                                    </div>
-                                ))}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <div className="tic-right">
-                <h1 className="player-text">Player {player}</h1>
-                <Webcam className="webcam" ref={webcamRef} />
-                {result && (
-                    <div className="prediction">
-                        Prediction: {defaultBoard[result[0]][result[1]]}
+                        })}
                     </div>
-                )}
-                <AwesomeButton
-                    type="primary"
-                    onPress={() => {
-                        confirm();
-                    }}
+                </motion.div>
+                <motion.div
+                    className="tic-right"
+                    initial={{ x: 1000 }}
+                    animate={{ x: 0 }}
                 >
-                    Confirm
-                </AwesomeButton>
+                    <h1 className="player-text">Player {player}</h1>
+                    <Webcam className="webcam" ref={webcamRef} />
+                    {result && (
+                        <div className="prediction">
+                            Prediction: {defaultBoard[result[0]][result[1]]}
+                        </div>
+                    )}
+                    <AwesomeButton
+                        type="primary"
+                        onPress={() => {
+                            confirm();
+                        }}
+                        action={() => {
+                            confirm();
+                        }}
+                    >
+                        Confirm
+                    </AwesomeButton>
+                </motion.div>
             </div>
-        </div>
+        </>
     );
 };
 
